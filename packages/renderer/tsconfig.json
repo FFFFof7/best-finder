@@ -1,0 +1,25 @@
+{
+  "extends": "../../tsconfig-base.json",
+  "include": [
+    "./**/*.ts",
+    "./**/*.d.ts",
+    "./**/*.tsx",
+    "./**/*.vue"
+  ],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "lib": [
+      "dom",
+      "esnext"
+    ],
+    "types": [
+      "../../node_modules/vite/client",
+      "../../node_modules/vite-plugin-pages/client"
+    ],
+    "paths": {
+      "~/*": [
+        "src/*"
+      ]
+    }
+  }
+}
