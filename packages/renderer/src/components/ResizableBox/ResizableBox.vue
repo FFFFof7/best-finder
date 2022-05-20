@@ -1,21 +1,30 @@
 <script setup lang="ts">
 import type { resizeEvent } from './ResizableBox'
-const width = ref(100)
-const height = ref(100)
+
+interface Props {
+  width?: number
+  height?: number
+}
+interface Emits{
+  (e: 'update:width', size: Props['width']): void
+  (e: 'update:height', size: Props['height']): void
+}
+const { width = 10, height = 10 } = defineProps<Props>()
+const emit = defineEmits<Emits>()
 const boxSizeStyle = computed(() => {
   return {
-    width: `${width.value}px`,
-    height: `${height.value}px`,
+    width: `${width}px`,
+    height: `${height}px`,
   }
 })
 const resizableBox = $ref<HTMLDivElement>()
 function rightResizeChange({ x: mouseX }: resizeEvent) {
   const boxLeft = resizableBox.getBoundingClientRect().left
-  width.value = mouseX - boxLeft
+  emit('update:width', mouseX - boxLeft)
 }
 function bottomResizeChange({ y: mouseY }: resizeEvent) {
   const boxTop = resizableBox.getBoundingClientRect().top
-  height.value = mouseY - boxTop
+  emit('update:height', mouseY - boxTop)
 }
 
 </script>
