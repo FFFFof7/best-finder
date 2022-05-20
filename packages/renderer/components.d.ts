@@ -9,6 +9,8 @@ declare module '@vue/runtime-core' {
     Resizer: typeof import('./src/components/ResizableBox/Resizer.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SplitView: typeof import('./src/components/SplitVIew/SplitView.vue')['default']
+    SplitViewContainer: typeof import('./src/components/SplitVIew/SplitViewContainer.vue')['default']
   }
 }
 
