@@ -1,15 +1,22 @@
 <script setup lang="ts">
 import type { resizeEvent } from './ResizableBox'
-
+type ShowResizer = [
+  ('top' | 'right' | 'bottom' | 'left')?,
+  ('top' | 'right' | 'bottom' | 'left')?,
+  ('top' | 'right' | 'bottom' | 'left')?,
+  ('top' | 'right' | 'bottom' | 'left')?,
+]
 interface Props {
   width?: number
   height?: number
+  showResizer?: ShowResizer
 }
 interface Emits{
   (e: 'update:width', size: Props['width']): void
   (e: 'update:height', size: Props['height']): void
 }
-const { width = 10, height = 10 } = defineProps<Props>()
+
+const { width = 10, height = 10, showResizer = ['top', 'right', 'bottom', 'left'] } = defineProps<Props>()
 const emit = defineEmits<Emits>()
 const boxSizeStyle = computed(() => {
   return {
@@ -26,7 +33,20 @@ function bottomResizeChange({ y: mouseY }: resizeEvent) {
   const boxTop = resizableBox.getBoundingClientRect().top
   emit('update:height', mouseY - boxTop)
 }
-
+const resizerEventMap: Record<string, (e: resizeEvent) => void> = {
+  top: bottomResizeChange,
+  right: rightResizeChange,
+  bottom: bottomResizeChange,
+  left: bottomResizeChange,
+}
+const resizers = computed(() => {
+  return showResizer!.map((item) => {
+    return {
+      postion: item,
+      resizerEvent: resizerEventMap[item!],
+    }
+  })
+})
 </script>
 
 <template>
@@ -38,8 +58,12 @@ function bottomResizeChange({ y: mouseY }: resizeEvent) {
       border border-green-500
       :style="boxSizeStyle"
     >
-      <Resizer absolute position="right" @resize="rightResizeChange" />
-      <Resizer absolute position="bottom" @resize="bottomResizeChange" />
+      <Resizer
+        v-for="item, index in resizers"
+        :key="index" absolute
+        :position="item.postion"
+        @resize="item.resizerEvent"
+      />
     </div>
   </div>
 </template>

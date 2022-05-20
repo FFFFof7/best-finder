@@ -4,7 +4,14 @@
 
 <template>
   <div>
-    <ResizableBox />
+    <SplitViewContainer>
+      <SplitView>1</SplitView>
+      <SplitView>2</SplitView>
+      <SplitView>3</SplitView>
+      <SplitView>3</SplitView>
+      <SplitView>3</SplitView>
+      <SplitView>3</SplitView>
+    </SplitViewContainer>
   </div>
 </template>
 
