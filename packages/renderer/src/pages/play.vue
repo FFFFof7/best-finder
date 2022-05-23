@@ -4,7 +4,7 @@
 
 <template>
   <div>
-    <SplitViewContainer>
+    <SplitViewContainer mode="vertical">
       <SplitView>1</SplitView>
       <SplitView>2</SplitView>
       <SplitView>3</SplitView>

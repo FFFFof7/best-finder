@@ -9,6 +9,6 @@ export interface SplitViewContext {
   mode: SplitViewMode
   views: View[]
   addView: (view: View) => void
-  onResize: (view: View, viewIndex: number, w: number) => void
+  onResize: (view: View, w: number, viewIndex: number) => void
 }
 export const SplitViewKey: InjectionKey<SplitViewContext> = Symbol('SplitView')

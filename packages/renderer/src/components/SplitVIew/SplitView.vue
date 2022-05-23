@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { SplitViewKey } from './SplitVIew'
 import useId from '~/composables/useId'
-const height = ref(100)
 const SplitViewContext = inject(SplitViewKey)!
 
 const viewId = useId()
@@ -28,10 +27,11 @@ const showResizer = computed(() => {
 <template>
   <div>
     <ResizableBox
-      v-model:height="height"
       :width="view.width"
+      :height="view.height"
       :show-resizer="showResizer"
-      @update:width="SplitViewContext.onResize(view,viewIndex, $event!)"
+      @update:width="SplitViewContext.onResize(view, $event!, viewIndex)"
+      @update:height="SplitViewContext.onResize(view, $event!, viewIndex)"
     />
   </div>
 </template>
