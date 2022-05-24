@@ -25,10 +25,10 @@ const showResizer = computed(() => {
 </script>
 
 <template>
-  <div>
+  <div class="w-100% h-100%">
     <ResizableBox
-      :width="view.width"
-      :height="view.height"
+      :width="view.width || '100%'"
+      :height="view.height || '100%'"
       :show-resizer="showResizer"
       @update:width="SplitViewContext.onResize(view, $event!, viewIndex)"
       @update:height="SplitViewContext.onResize(view, $event!, viewIndex)"

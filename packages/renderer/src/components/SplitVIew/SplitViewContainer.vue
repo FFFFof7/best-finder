@@ -14,22 +14,15 @@ const views = reactive<SplitViewContext['views']>([])
 const splitViewEl = $ref<HTMLDivElement>()
 let containerWidth = 0
 let containerHeight = 0
-let isMounted = $ref(false)
-onMounted(() => {
-  const { clientWidth, clientHeight } = splitViewEl
-  containerWidth = clientWidth
-  containerHeight = clientHeight
-  isMounted = true
-})
 const addView: SplitViewContext['addView'] = (view) => {
   views.push(view)
   views.forEach((item) => {
     if (mode === 'horizontal') {
       item.width = containerWidth / views.length
-      item.height = containerHeight
+      // item.height = containerHeight
     }
     else {
-      item.width = containerWidth
+      // item.width = containerWidth
       item.height = containerHeight / views.length
     }
   })
@@ -61,6 +54,29 @@ const onResize: SplitViewContext['onResize'] = (view, w, viewIndex) => {
   }
 }
 
+let isMounted = $ref(false)
+onMounted(() => {
+  const { clientWidth, clientHeight } = splitViewEl
+  containerWidth = clientWidth
+  containerHeight = clientHeight
+  useResizeObserver(splitViewEl, ([{ contentRect: { width, height } }]) => {
+    if (mode === 'vertical') {
+      const shouldUpdateView = views.find(item => (item.height || 0) + height - containerHeight >= maxSize)
+      if (!shouldUpdateView)
+        return
+      shouldUpdateView.height! += height - containerHeight
+    }
+    else {
+      const shouldUpdateView = views.find(item => (item.width || 0) + width - containerWidth >= maxSize)
+      if (!shouldUpdateView)
+        return
+      shouldUpdateView.width! += width - containerWidth
+    }
+    containerHeight = height
+    containerWidth = width
+  })
+  isMounted = true
+})
 provide(SplitViewKey, {
   mode,
   views,

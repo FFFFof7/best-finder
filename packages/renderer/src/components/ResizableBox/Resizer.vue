@@ -65,7 +65,7 @@ watch(
 </script>
 
 <template>
-  <i ref="resizer" bg-red :style="computedStyle" />
+  <i ref="resizer" bg-red z-2 :style="computedStyle" />
 </template>
 
 <style scoped lang="less">

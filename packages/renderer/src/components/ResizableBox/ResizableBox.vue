@@ -7,21 +7,21 @@ type ShowResizer = [
   ('top' | 'right' | 'bottom' | 'left')?,
 ]
 interface Props {
-  width?: number
-  height?: number
+  width?: number | string
+  height?: number | string
   showResizer?: ShowResizer
 }
 interface Emits{
-  (e: 'update:width', size: Props['width']): void
-  (e: 'update:height', size: Props['height']): void
+  (e: 'update:width', size: number): void
+  (e: 'update:height', size: number): void
 }
 
 const { width = 10, height = 10, showResizer = ['top', 'right', 'bottom', 'left'] } = defineProps<Props>()
 const emit = defineEmits<Emits>()
 const boxSizeStyle = computed(() => {
   return {
-    width: `${width}px`,
-    height: `${height}px`,
+    width: typeof width === 'string' ? width : `${width}px`,
+    height: typeof height === 'string' ? height : `${height}px`,
   }
 })
 const resizableBox = $ref<HTMLDivElement>()
@@ -50,10 +50,9 @@ const resizers = computed(() => {
 </script>
 
 <template>
-  <div>
+  <div class="w-100% h-100%">
     <div
       ref="resizableBox"
-      w-5 h-5
       relative
       :style="boxSizeStyle"
     >
