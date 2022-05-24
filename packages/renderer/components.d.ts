@@ -5,6 +5,8 @@ import '@vue/runtime-core'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    FileIem: typeof import('./src/components/FileItem/FileIem.vue')['default']
+    FileItem: typeof import('./src/components/FileItem/FileItem.vue')['default']
     ResizableBox: typeof import('./src/components/ResizableBox/ResizableBox.vue')['default']
     Resizer: typeof import('./src/components/ResizableBox/Resizer.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
