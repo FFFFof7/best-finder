@@ -55,7 +55,6 @@ const resizers = computed(() => {
       ref="resizableBox"
       w-5 h-5
       relative
-      border border-green-500
       :style="boxSizeStyle"
     >
       <Resizer
@@ -67,7 +66,3 @@ const resizers = computed(() => {
     </div>
   </div>
 </template>
-
-<style scoped lang="less">
-
-</style>

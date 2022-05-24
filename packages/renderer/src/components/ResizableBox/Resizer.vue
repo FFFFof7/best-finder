@@ -4,11 +4,12 @@ import type { resizeEvent } from './ResizableBox'
 interface Props{
   position?: 'top' | 'right' | 'bottom' | 'left'
   resizerWidth?: number
+  color?: string
 }
 interface Emits{
   (e: 'resize', { x, y }: resizeEvent): void
 }
-const { position = 'right', resizerWidth = 3 } = defineProps<Props>()
+const { position = 'right', resizerWidth = 2, color = 'rgba(0, 0, 0, .7)' } = defineProps<Props>()
 const emits = defineEmits<Emits>()
 
 const computedStyle = computed(() => {
@@ -19,6 +20,7 @@ const computedStyle = computed(() => {
     bottom: 'unset',
     left: 'unset',
     [position]: 0,
+    backgroundColor: color,
   }
   if (position === 'top' || position === 'bottom') {
     style.width = '100%'
