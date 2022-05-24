@@ -32,6 +32,8 @@ const showResizer = computed(() => {
       :show-resizer="showResizer"
       @update:width="SplitViewContext.onResize(view, $event!, viewIndex)"
       @update:height="SplitViewContext.onResize(view, $event!, viewIndex)"
-    />
+    >
+      <slot />
+    </ResizableBox>
   </div>
 </template>

@@ -57,12 +57,15 @@ const resizers = computed(() => {
       relative
       :style="boxSizeStyle"
     >
-      <Resizer
-        v-for="item, index in resizers"
-        :key="index" absolute
-        :position="item.postion"
-        @resize="item.resizerEvent"
-      />
+      <div class="resizers">
+        <Resizer
+          v-for="item, index in resizers"
+          :key="index" absolute
+          :position="item.postion"
+          @resize="item.resizerEvent"
+        />
+      </div>
+      <slot />
     </div>
   </div>
 </template>
