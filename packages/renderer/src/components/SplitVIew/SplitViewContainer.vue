@@ -11,16 +11,26 @@ const sizeUnit = mode === 'horizontal' ? 'width' : 'height'
 const maxSize = mode === 'horizontal' ? minWidth : minHeight
 
 const views = reactive<SplitViewContext['views']>([])
-const { clientWidth, clientHeight } = document.body
+const splitViewEl = $ref<HTMLDivElement>()
+let containerWidth = 0
+let containerHeight = 0
+let isMounted = $ref(false)
+onMounted(() => {
+  const { clientWidth, clientHeight } = splitViewEl
+  containerWidth = clientWidth
+  containerHeight = clientHeight
+  isMounted = true
+})
 const addView: SplitViewContext['addView'] = (view) => {
   views.push(view)
   views.forEach((item) => {
     if (mode === 'horizontal') {
-      item.width = clientWidth / views.length
+      item.width = containerWidth / views.length
+      item.height = containerHeight
     }
     else {
-      item.width = clientWidth
-      item.height = clientHeight / views.length
+      item.width = containerWidth
+      item.height = containerHeight / views.length
     }
   })
 }
@@ -60,7 +70,7 @@ provide(SplitViewKey, {
 </script>
 
 <template>
-  <div flex :style="{flexDirection: mode === 'horizontal' ? 'row' : 'column'}">
-    <slot />
+  <div ref="splitViewEl" flex class="w-100% h-100%" :style="{flexDirection: mode === 'horizontal' ? 'row' : 'column'}">
+    <slot v-if="isMounted" />
   </div>
 </template>
